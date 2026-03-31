@@ -2,16 +2,6 @@
 
 Visualise Gaussian-Type Orbital wave-functions interactively with Plotly.
 
-Quick-start in a Jupyter notebook
-----------------------------------
-    from mo_viewer import BasisGTO, plot_molecular_orbital, demo_h2, demo_water
-
-    fig = demo_h2(mo_index=0)   # 1σg bonding orbital
-    fig.show()
-
-    fig = demo_water(mo_index=4)  # 1b1 lone-pair HOMO
-    fig.show()
-
 Architecture
 ------------
 BasisGTO
