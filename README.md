@@ -2,7 +2,7 @@
 
 Visualise Gaussian-Type Orbital wave-functions interactively with Plotly.
 
-<img width="1195" height="698" alt="image" src="https://github.com/user-attachments/assets/a231b9ca-9049-44bf-b4dc-31c5720ce76b" />
+[<img width="1195" height="698" alt="image" src="https://github.com/user-attachments/assets/a231b9ca-9049-44bf-b4dc-31c5720ce76b" />](https://aleksandraleszczyk.github.io/ElectronCloud/examples/ethylene_mo6_rhf.html)
 
 
 Architecture
