@@ -4,6 +4,7 @@ from typing import Any, List, Tuple, Self
 
 import numpy as np
 
+from electron_cloud.parser_molden import parse_molden_to_dict
 from electron_cloud.utils import _CART, _prim_norm, _SYMBOL
 
 
@@ -65,22 +66,6 @@ class BasisGTO:
     """
 
     # ── construction ──────────────────────────────────────────────────────
-    @classmethod
-    def from_pybest_basis(
-        cls,
-        basis: Any,
-    ) -> Self:
-
-        return cls(
-            atoms=basis.atom,
-            coordinates=basis.coordinates,
-            number_of_primitives=basis.nprim,
-            contraction=basis.contraction,
-            alpha=basis.alpha,
-            shell_types=basis.shell_types,
-            shell_to_atom=basis.shell2atom,
-        )
-
     def __init__(
         self,
         atoms: List[int],
@@ -97,7 +82,7 @@ class BasisGTO:
         self.n_atoms = int(self.atoms.size)
 
         number_of_primitives = number_of_primitives
-        shell_types = shell_types
+        self.shell_types = shell_types
         shell_to_atom = shell_to_atom
 
         a_arr = np.asarray(alpha, dtype=float)
@@ -140,6 +125,31 @@ class BasisGTO:
                 self._nc.append(norms * coeffs)
 
         self.n_basis = len(self._centers)
+
+
+    @classmethod
+    def from_pybest_basis(
+        cls,
+        basis: Any,
+    ) -> Self:
+
+        return cls(
+            atoms=basis.atom,
+            coordinates=basis.coordinates,
+            number_of_primitives=basis.nprim,
+            contraction=basis.contraction,
+            alpha=basis.alpha,
+            shell_types=basis.shell_types,
+            shell_to_atom=basis.shell2atom,
+        )
+
+    @classmethod
+    def from_molden(
+        cls,
+        filepath: str,
+    ) -> Self:
+        return cls(**parse_molden_to_dict(filepath))
+
 
     # ── repr ──────────────────────────────────────────────────────────────
 
