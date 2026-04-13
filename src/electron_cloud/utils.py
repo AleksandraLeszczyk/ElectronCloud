@@ -242,7 +242,7 @@ def _prim_norm(alpha: float, lx: int, ly: int, lz: int) -> float:
 def _find_bonds(
     coords: np.ndarray,
     atoms: np.ndarray,
-    factor: float = 1.7,
+    factor: float = 1.6,
 ) -> list[Tuple[int, int]]:
     """
     Infer bonds from interatomic distances vs. covalent-radii threshold.
@@ -307,3 +307,12 @@ def _cylinder_mesh(
         np.array(jj),
         np.array(kk),
     )
+
+
+def get_sphere_coords(center, radius, resolution=20):
+    """Generates X, Y, Z coordinates for a 3D sphere surface."""
+    u, v = np.mgrid[0:2*np.pi:complex(resolution), 0:np.pi:complex(resolution)]
+    x = center[0] + radius * np.cos(u) * np.sin(v)
+    y = center[1] + radius * np.sin(u) * np.sin(v)
+    z = center[2] + radius * np.cos(v)
+    return x, y, z

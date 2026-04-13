@@ -6,7 +6,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 from electron_cloud.gto import BasisGTO
-from electron_cloud.utils import _COLOR, _SYMBOL, _VDW_R, _cylinder_mesh, _find_bonds
+from electron_cloud.utils import _COLOR, _SYMBOL, _VDW_R, _cylinder_mesh, _find_bonds, get_sphere_coords
 
 def plot_molecular_orbital(
     Basis: BasisGTO,
@@ -17,7 +17,7 @@ def plot_molecular_orbital(
     isovalue: float = 0.05,
     padding: float = 2.0,
     opacity: float = 0.45,
-    atom_scale: float = 0.5,
+    atom_scale: float = 0.25,
     bond_radius: float = 0.08,
     title: Optional[str] = None,
     dark_bg: bool = False,
@@ -139,30 +139,43 @@ def plot_molecular_orbital(
     for idx, (z_at, xyz) in enumerate(zip(atoms, coords)):
         z_int = int(z_at)
         color = _COLOR.get(z_int, "#CCCCCC")
-        rvdw = _VDW_R.get(0.3 * z_int, 0.77)
+
+        # Actual physical radius in data units (Angstroms)
+        rvdw = _VDW_R.get(z_int, 1.0) * atom_scale 
         symbol = _SYMBOL.get(z_int, str(z_int))
+
+        # 1. Create the 3D Ball (Surface)
+        sph_x, sph_y, sph_z = get_sphere_coords(xyz, rvdw)
+
+        traces.append(
+            go.Surface(
+                x=sph_x, y=sph_y, z=sph_z,
+                colorscale=[[0, color], [1, color]],
+                showscale=False,
+                opacity=1.0,  # Set to 1.0 for solid 3D balls
+                name=f"{symbol}{idx + 1}",
+                hoverinfo="name"
+            )
+        )
+
+        # 2. Create the Label (Scatter3d)
         traces.append(
             go.Scatter3d(
                 x=[xyz[0]],
                 y=[xyz[1]],
                 z=[xyz[2]],
-                mode="markers+text",
-                marker=dict(
-                    size=rvdw * atom_scale * 40,  # empirical px scaling
-                    color=color,
-                    symbol="circle",
-                    line=dict(color="#333333", width=1),
-                ),
+                mode="text",
                 text=[symbol],
                 textfont=dict(
-                    size=13,
+                    size=14,
                     color="white" if dark_bg else "#111111",
+                    family="Arial Black" # Makes the symbol pop
                 ),
-                textposition="top center",
-                name=f"{symbol}{idx + 1}",
-                showlegend=True,
+                showlegend=False, # Hide the text trace from legend to avoid duplicates
+                hoverinfo="skip"
             )
         )
+
     # ── 6. Layout ──────────────────────────────────────────────────────────
     bg = "#0d0d1a" if dark_bg else "#ffffff"
     axc = "#bbbbbb" if dark_bg else "#DCD5D5"
