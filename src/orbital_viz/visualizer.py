@@ -5,8 +5,8 @@ from typing import Optional
 import numpy as np
 import plotly.graph_objects as go
 
-from electron_cloud.gto import BasisGTO
-from electron_cloud.utils import _COLOR, _SYMBOL, _VDW_R, _cylinder_mesh, _find_bonds, get_sphere_coords
+from orbital_viz.gto import BasisGTO
+from orbital_viz.utils import _COLOR, _SYMBOL, _VDW_R, _cylinder_mesh, _find_bonds, get_sphere_coords
 
 def plot_molecular_orbital(
     Basis: BasisGTO,

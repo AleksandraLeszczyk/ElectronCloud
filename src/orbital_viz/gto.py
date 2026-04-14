@@ -4,8 +4,8 @@ from typing import Any, List, Tuple, Self
 
 import numpy as np
 
-from electron_cloud.parser_molden import parse_molden_to_dict
-from electron_cloud.utils import _CART, _prim_norm, _SYMBOL
+from orbital_viz.parser_molden import parse_molden_to_dict
+from orbital_viz.utils import _CART, _prim_norm, _SYMBOL
 
 
 class BasisGTO:
