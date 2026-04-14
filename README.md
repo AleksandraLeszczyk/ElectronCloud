@@ -1,8 +1,8 @@
-# ElectronCloud
+# OrbitalViz
 
 Visualise Molecules and Molecular Orbitals (MOs) with Python.
 
-[<img width="408" height="262" alt="image" src="https://github.com/user-attachments/assets/f47d72a9-e9c8-43ae-995e-19ac6df62ffe" />](https://aleksandraleszczyk.github.io/ElectronCloud/examples/ethylene_mo6_rhf.html)
+[<img width="870" height="212" alt="image" src="https://github.com/user-attachments/assets/2b398e11-624d-41cc-84e1-aab6d41798fd" />](https://aleksandraleszczyk.github.io/ElectronCloud/examples/ethylene_mo6_rhf.html)
 
 Architecture
 ------------
