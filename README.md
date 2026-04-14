@@ -1,4 +1,4 @@
-# ElectronCloud
+# OrbitalViz
 
 Visualise Molecules and Molecular Orbitals (MOs) with Python.
 
