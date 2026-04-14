@@ -21,6 +21,7 @@ def plot_molecular_orbital(
     bond_radius: float = 0.08,
     title: Optional[str] = None,
     dark_bg: bool = False,
+    show_labels: bool = True,
 ) -> go.Figure:
     """
     Render the *n*-th molecular orbital as an interactive Plotly 3-D figure.
@@ -159,22 +160,23 @@ def plot_molecular_orbital(
         )
 
         # 2. Create the Label (Scatter3d)
-        traces.append(
-            go.Scatter3d(
-                x=[xyz[0]],
-                y=[xyz[1]],
-                z=[xyz[2]],
-                mode="text",
-                text=[symbol],
-                textfont=dict(
-                    size=14,
-                    color="white" if dark_bg else "#111111",
-                    family="Arial Black" # Makes the symbol pop
-                ),
-                showlegend=False, # Hide the text trace from legend to avoid duplicates
-                hoverinfo="skip"
+        if show_labels:
+            traces.append(
+                go.Scatter3d(
+                    x=[xyz[0]],
+                    y=[xyz[1]],
+                    z=[xyz[2]],
+                    mode="text",
+                    text=[symbol],
+                    textfont=dict(
+                        size=14,
+                        color="white" if dark_bg else "#111111",
+                        family="Arial Black" # Makes the symbol pop
+                    ),
+                    showlegend=False, # Hide the text trace from legend to avoid duplicates
+                    hoverinfo="skip"
+                )
             )
-        )
 
     # ── 6. Layout ──────────────────────────────────────────────────────────
     bg = "#0d0d1a" if dark_bg else "#ffffff"
